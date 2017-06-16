@@ -3,5 +3,6 @@
 #define CW_SORT_H
 
 void insert_sort(int* input, size_t len);
+void merge_sort(int* input, size_t len);
 
 #endif
