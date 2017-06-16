@@ -22,14 +22,14 @@ void insert_sort(int* input, size_t len)
     }
 }
 
-void merge(int* input, size_t left, size_t right, size_t middle)
+void merge(int* input, size_t l_pos, size_t r_pos, size_t center)
 {
-    int* temp = malloc(sizeof(int) * (right - left + 1));
+    int* temp = malloc(sizeof(int) * (r_pos - l_pos + 1));
 
     int i = 0;
-    int left_i = left;
-    int right_i = middle + 1;
-    while (left_i <= middle && right_i <= right)
+    int left_i = l_pos;
+    int right_i = center + 1;
+    while (left_i <= center && right_i <= r_pos)
     {
         if (input[left_i] < input[right_i])
             temp[i++] = input[left_i++];
@@ -37,28 +37,28 @@ void merge(int* input, size_t left, size_t right, size_t middle)
             temp[i++] = input[right_i++];
     }
 
-    for (; left_i <= middle; left_i++, i++)
-        temp[i] = input[left_i];
+    while (left_i <= center)
+        temp[i++] = input[left_i++];
 
-    for (; right_i <= right; right_i++, i++)
-        temp[i] = input[right_i];
+    while (right_i <= r_pos)
+        temp[i++] = input[right_i++];
 
     i = 0;
-    for (; i < right - left + 1; i++)
-        input[left + i] = temp[i];
+    for (; i < r_pos - l_pos + 1; i++)
+        input[l_pos + i] = temp[i];
 
     free(temp);
 }
 
-static void m_sort(int* input, size_t left, size_t right)
+static void m_sort(int* input, size_t l_pos, size_t r_pos)
 {
-    if (left >= right)
+    if (l_pos >= r_pos)
         return;
 
-    int middle = left + (right - left) / 2;
-    m_sort(input, left, middle);
-    m_sort(input, middle + 1, right);
-    merge(input, left, right, middle);
+    int center = (r_pos + l_pos) / 2;
+    m_sort(input, l_pos, center);
+    m_sort(input, center + 1, r_pos);
+    merge(input, l_pos, r_pos, center);
 }
 
 void merge_sort(int* input, size_t len)
