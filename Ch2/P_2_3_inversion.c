@@ -16,7 +16,6 @@ static int count_stride(int* input, size_t l_pos, size_t r_pos, size_t center)
         if (input[left_i] < input[right_i])
         {
             temp[i++] = input[left_i++];
-            // count_inversion += (right_i - center - 1);
         }
         else
         {
@@ -26,13 +25,8 @@ static int count_stride(int* input, size_t l_pos, size_t r_pos, size_t center)
     }
 
     while (left_i <= center)
-    {
-        // if (input[left_i] > input[r_pos])
-        //     count_inversion += (r_pos - center);
-
         temp[i++] = input[left_i++];    
-    }
-
+    
     while (right_i <= r_pos)
         temp[i++] = input[right_i++];
 
