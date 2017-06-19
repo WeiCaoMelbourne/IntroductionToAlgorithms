@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* The key is to use the skeleton of merge sort. */
 static int count_stride(int* input, size_t l_pos, size_t r_pos, size_t center)
 {
     int* temp = malloc(sizeof(int) * (r_pos - l_pos + 1));
@@ -39,7 +40,7 @@ static int count_stride(int* input, size_t l_pos, size_t r_pos, size_t center)
     return count_inversion;
 }
 
-static int count_inversion(int* input, size_t l_pos, size_t r_pos)
+int count_inversion(int* input, size_t l_pos, size_t r_pos)
 {
     if (l_pos < r_pos)
     {
