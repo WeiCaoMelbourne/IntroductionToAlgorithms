@@ -65,3 +65,25 @@ void merge_sort(int* input, size_t len)
 {
     m_sort(input, 0, len - 1);
 }
+
+static void m_insert_sort(int* input, size_t l_pos, size_t r_pos, int key)
+{
+    if (r_pos - l_pos > key)
+    {
+        int center = (r_pos + l_pos) / 2;
+        m_sort(input, l_pos, center);
+        m_sort(input, center + 1, r_pos);
+        merge(input, l_pos, r_pos, center);
+    }
+    else
+    {
+        insert_sort(input + l_pos, r_pos - l_pos + 1);
+    }
+}
+
+void merge_insert_sort(int* input, size_t len)
+{
+    #define MERGE_INSERT_THESHOLD 43
+    int k = MERGE_INSERT_THESHOLD;
+    m_insert_sort(input, 0, len - 1, k);
+}
