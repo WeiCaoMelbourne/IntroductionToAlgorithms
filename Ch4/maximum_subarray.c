@@ -104,5 +104,16 @@ int main()
         printf("Test case 2# pass\n");
     }
 
+    int a3[10] = {-1, -2, -5, -7, -10, -2, -3, -4, -9, -11};
+    sum = find_maximum_subarray(a3, 0, sizeof(a3)/sizeof(int) - 1, &start, &end);
+    if (sum != -1 || start != 0 || end != 0)
+    {
+        printf("Test case 2# fails. Sum: -1 vs %d, start:0 vs %d, end: 0 vs %d\n", sum, start, end);
+    }
+    else
+    {
+        printf("Test case 2# pass\n");
+    }
+
     return 0;
 }
