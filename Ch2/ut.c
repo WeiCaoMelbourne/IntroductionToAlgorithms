@@ -21,7 +21,7 @@ void print_array(int* array, size_t len)
 {
     int i = 0;
     for (; i < len; i ++)
-        printf("%d", array[i]);
+        printf("%d,", array[i]);
 
     printf("\n");
 }

@@ -250,6 +250,25 @@ int main()
     {
         printf("matrix_multiply_recursive() case 2# succeed\n");
     }
+
+    // int a4[4][5] = {{1,2,3,4,5},{3,4,5,6,7},{4,5,6,7,8},{5,6,7,8,9}};
+    // int b4[5][2] = {{1,2},{3,4},{5,6},{7,8},{9,0}};
+
+    // int c3[4][2];
+    // int expected3[4][2] = {{95,60},{120,80},{170,120},{195,140}};
+    // matrix_multiply_recursive(2, 0, 0, a3, 0, 0, b3, 0, 0, c3, 2, c3);
+
+    // if (!compare_matrices(2, c3, expected3))
+    // {
+    //     printf("matrix_multiply_recursive() case 2# Fails, expected:\n");
+    //     print_matrix(2, expected3);
+    //     printf("Actual:");
+    //     print_matrix(2, c3);
+    // }
+    // else
+    // {
+    //     printf("matrix_multiply_recursive() case 2# succeed\n");
+    // }
     
     return 0;
 }
