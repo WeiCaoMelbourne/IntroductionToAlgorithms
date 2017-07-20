@@ -1,4 +1,19 @@
 #include <stdlib.h>
+#include "heap.h"
+
+void heap_sort(int* A, size_t len)
+{
+    build_max_heap(A, len);
+    int i = len - 1;
+    for (; i > 0; i --)
+    {
+        int temp = A[i];
+        A[i] = A[0];
+        A[0] = temp;
+
+        max_heapify(A, i, 0);
+    }
+}
 
 void insert_sort(int* input, size_t len)
 {

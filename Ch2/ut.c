@@ -233,6 +233,58 @@ int main()
         printf("merge insert sort testcase 3:OK\n");
     }
 
+    /* Heap sort test */
+    copy_array(before1, sizeof(input1)/sizeof(int), input1);
+    heap_sort(input1, sizeof(input1)/sizeof(int));
+    if (input1[0] != 12)
+    {
+        printf("Failed to sort array with 1 item\n");
+        printf("before:\n");
+        print_array(before1, sizeof(input1)/sizeof(int));
+        printf("after:\n");
+        print_array(input1, sizeof(input1)/sizeof(int));
+        printf("\n");
+        ut_test_failure += 1;
+    }
+    else
+    {
+        printf("heap sort testcase 1:OK\n");
+    }
+
+    copy_array(before2, sizeof(input2)/sizeof(int), input2);
+    heap_sort(input2, sizeof(input2)/sizeof(int));
+    if (!compare_arrays(input2, sizeof(input2)/sizeof(int), target2))
+    {
+        printf("Failed to sort array with 80 item\n");
+        printf("before:\n");
+        print_array(before1, sizeof(input2)/sizeof(int));
+        printf("after:\n");
+        print_array(input2, sizeof(input2)/sizeof(int));
+        printf("\n");
+        ut_test_failure += 1;
+    }
+    else
+    {
+        printf("heap sort testcase 2:OK\n");
+    }
+
+    copy_array(before3, sizeof(input3)/sizeof(int), input3);
+    heap_sort(input3, sizeof(input3)/sizeof(int));
+    if (!compare_arrays(input3, sizeof(input3)/sizeof(int), target3))
+    {
+        printf("Failed to sort array with 10 item\n");
+        printf("before:\n");
+        print_array(before3, sizeof(input3)/sizeof(int));
+        printf("after:\n");
+        print_array(input3, sizeof(input3)/sizeof(int));
+        printf("\n");
+        ut_test_failure += 1;
+    }
+    else
+    {
+        printf("heap sort testcase 3:OK\n");
+    }
+
     if (ut_test_failure == 0)
         printf("Success\n");
 

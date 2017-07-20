@@ -1,6 +1,6 @@
 #include "heap.h"
 
-static void max_heapify(int* A, size_t len, int i)
+void max_heapify(int* A, size_t len, int i)
 {
     int l = (i + 1) * 2 - 1;    /* C array starts with 0 */
     int r = (i + 1) * 2;

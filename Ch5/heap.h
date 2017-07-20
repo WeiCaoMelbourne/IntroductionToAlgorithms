@@ -4,5 +4,6 @@
 #include <stdlib.h>
 
 void build_max_heap(int* A, size_t len);
+void max_heapify(int* A, size_t len, int i);
 
 #endif

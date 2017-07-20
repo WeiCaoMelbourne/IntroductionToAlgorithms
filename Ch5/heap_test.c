@@ -1,3 +1,15 @@
+
+/*
+static compile and link:
+    1. cc -c heap.c 
+    2. cc -c unitest.c
+    3. cc heap_test.c heap.o unitest.o
+
+#dynamic compile and link:
+#    1. cc -shared -fPIC -o sorts.so sorts.c
+#    2. cc ut.c ./sorts.so
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "heap.h"
