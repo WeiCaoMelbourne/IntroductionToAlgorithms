@@ -80,6 +80,84 @@ void counting_sort(int* a, size_t len)
     free(b);
 }
 
+static void radix_sort_2(int* a, size_t len)
+{
+    int max = a[0];
+
+    int i = 1;
+    for (; i < len; i ++)
+    {
+        if (a[i] > max)
+            max = a[i];
+    }
+
+    const int BASE = 10;
+    int exp = 1;
+    while (max / exp > 0)
+    {
+        int c[BASE];
+        int i = 0;
+        for (; i < BASE; i ++)
+            c[i] = 0;
+
+        for (i = 0; i < len; i ++)
+            c[(abs(a[i]) / exp) % BASE] ++;
+
+        for (i = 1; i < BASE; i ++)
+            c[i] += c[i - 1];
+        
+        int* b = malloc(sizeof(int) * len);
+        for (i = len - 1; i >= 0; i --)
+        {
+            b[c[(abs(a[i]) / exp) % BASE] - 1] = a[i];
+            c[(abs(a[i]) / exp) % BASE] --;
+        }
+
+        for (i = 0; i < len; i++)
+            a[i] = b[i];
+
+        free(b);
+
+        exp *= BASE;
+    }
+}
+
+void radix_sort(int* a, size_t len)
+{
+    int negative_count = 0;
+
+    int i = 0;
+    for (; i < len; i ++)
+    {
+        if (a[i] < 0)
+            negative_count ++;
+    }
+
+    int* negatives = malloc(sizeof(int) * negative_count);
+    int* positives = malloc(sizeof(int) * (len - negative_count));
+    i = 0;
+    negative_count = 0;
+    int positive_count = 0;
+    for (; i < len; i ++)
+    {
+        if (a[i] < 0)
+            negatives[negative_count++] = 0 - a[i];
+        else
+            positives[positive_count++] = a[i];
+    }
+
+    radix_sort_2(negatives, negative_count);
+    radix_sort_2(positives, positive_count);
+
+    i = 0;
+    for (; i < len; i ++)
+    {
+        if (i < negative_count)
+            a[i] = 0 - negatives[negative_count - i - 1];
+        else
+            a[i] = positives[i - negative_count];
+    }
+}
 
 void heap_sort(int* A, size_t len)
 {
