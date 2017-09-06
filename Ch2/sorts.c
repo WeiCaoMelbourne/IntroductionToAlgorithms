@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "heap.h"
 
-static int partition(int* A, int p, int r)
+int partition(int* A, int p, int r)
 {
     int pivot = A[r];
     int i = p - 1;
