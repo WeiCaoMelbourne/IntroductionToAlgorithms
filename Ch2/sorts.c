@@ -1,6 +1,86 @@
 #include <stdlib.h>
 #include "heap.h"
 
+static int partition(int* A, int p, int r)
+{
+    int pivot = A[r];
+    int i = p - 1;
+    int j = p;
+    for (; j < r; j ++)
+    {
+        if (A[j] < pivot)
+        {
+            i ++;
+            int temp = A[i];
+            A[i] = A[j];
+            A[j] = temp;
+        }
+    }
+
+    int temp = A[i + 1];
+    A[i + 1] = A[r];
+    A[r] = temp;
+
+    return i + 1;
+}
+
+static void recursive_quicksort(int* A, int p, int r)
+{
+    if (p < r)
+    {
+        int q = partition(A, p, r);
+        recursive_quicksort(A, p, q - 1);
+        recursive_quicksort(A, q + 1, r);
+    }
+}
+
+void quick_sort(int* A, size_t len)
+{
+    return recursive_quicksort(A, 0, len - 1);
+}
+
+void counting_sort(int* a, size_t len)
+{
+    int max = a[0], min = a[0];
+
+    int i = 1;
+    for (; i < len; i ++)
+    {
+        if (a[i] > max)
+            max = a[i];
+        if (a[i] < min)
+            min = a[i];
+    }
+
+    int* c = malloc(sizeof(int) * (max - min + 1));
+    for (i = 0; i < max - min + 1; i ++)
+        c[i] = 0;
+
+    for (i = 0; i < len; i ++)
+        c[a[i] - min] ++;
+
+    int sum = 0;
+    for (i = 0; i < max - min + 1; i ++)
+    {
+        sum += c[i];
+        c[i] = sum;
+    }
+
+    int* b = malloc(sizeof(int) * len);
+    for (i = len - 1; i >= 0; i --)
+    {
+        b[c[a[i] - min] - 1] = a[i];
+        c[a[i] - min] --;
+    }
+
+    for (i = 0; i < len; i++)
+        a[i] = b[i];
+
+    free(c);
+    free(b);
+}
+
+
 void heap_sort(int* A, size_t len)
 {
     build_max_heap(A, len);
