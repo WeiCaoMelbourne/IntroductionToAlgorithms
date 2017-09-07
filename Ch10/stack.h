@@ -5,8 +5,8 @@
 
 struct stack
 {
-	int stk[MAX_STACK_SIZE];
-	int top;
+    int stk[MAX_STACK_SIZE];
+    int top;
 };
 
 typedef struct stack STACK;
