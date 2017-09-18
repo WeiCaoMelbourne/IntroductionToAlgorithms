@@ -4,23 +4,23 @@
 
 #include <stdlib.h>
 
-struct tree_node
+struct bst_node
 {
     int data;
-    struct tree_node* left;
-    struct tree_node* right;
-    struct tree_node* parent;
+    struct bst_node* left;
+    struct bst_node* right;
+    struct bst_node* parent;
 };
 
-typedef struct tree_node* BST;
+typedef struct bst_node* BST;
 
-struct tree_node* bst_maximum(BST t);
-struct tree_node* bst_successor(BST t);
-struct tree_node* bst_search(BST t, int x);
+struct bst_node* bst_maximum(BST t);
+struct bst_node* bst_successor(BST t);
+struct bst_node* bst_search(BST t, int x);
 BST initialize_bst();
 void bst_insert(BST t, int data);
-void bst_transplant(BST t, struct tree_node* u, struct tree_node* v);
-void bst_delete(BST t, struct tree_node* z);
+void bst_transplant(BST t, struct bst_node* u, struct bst_node* v);
+void bst_delete(BST t, struct bst_node* z);
 void bst_inorder_print(BST t);
 void bst_inorder_str(BST t, char* output, size_t len);
 void bst_destory(BST t);

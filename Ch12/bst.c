@@ -13,7 +13,7 @@ void bst_inorder(BST t)
     }
 }
 
-struct tree_node* bst_search(BST t, int x)
+struct bst_node* bst_search(BST t, int x)
 {
     if (t && x == t->data)
         return t;
@@ -24,7 +24,7 @@ struct tree_node* bst_search(BST t, int x)
     return bst_search(t->left, x);
 }
 
-struct tree_node* bst_minimum(BST t)
+struct bst_node* bst_minimum(BST t)
 {
     while (t->left)
         t = t->left;
@@ -32,7 +32,7 @@ struct tree_node* bst_minimum(BST t)
     return t;
 }
 
-struct tree_node* bst_maximum(BST t)
+struct bst_node* bst_maximum(BST t)
 {
     while (t->right)
         t = t->right;
@@ -41,13 +41,13 @@ struct tree_node* bst_maximum(BST t)
 }
 
 /* in order. successor of node t is the node with the smallest data greater than t.data */
-struct tree_node* bst_successor(BST t)
+struct bst_node* bst_successor(BST t)
 {
     if (t->right)
         return bst_minimum(t);
 
-    struct tree_node* y = t->parent;
-    struct tree_node* x = t;
+    struct bst_node* y = t->parent;
+    struct bst_node* x = t;
 
     while (y && x == y->right)
     {
@@ -60,7 +60,7 @@ struct tree_node* bst_successor(BST t)
 
 BST initialize_bst()
 {
-    BST t = malloc(sizeof(struct tree_node));
+    BST t = malloc(sizeof(struct bst_node));
     t->left = t->right = t->parent = 0;
 }
 
@@ -89,8 +89,8 @@ void bst_insert(BST t, int data)
         return;
     }
 
-    struct tree_node* p = NULL;
-    struct tree_node* x = t;
+    struct bst_node* p = NULL;
+    struct bst_node* x = t;
 
     while (x)
     {
@@ -105,7 +105,7 @@ void bst_insert(BST t, int data)
         }
     }
 
-    struct tree_node* new_node = (struct tree_node*)malloc(sizeof(struct tree_node));
+    struct bst_node* new_node = (struct bst_node*)malloc(sizeof(struct bst_node));
     new_node->parent = p;
     new_node->data = data;
     new_node->left = new_node->right = NULL;
@@ -117,7 +117,7 @@ void bst_insert(BST t, int data)
 }
 
 /* Replace u with v */
-void bst_transplant(BST t, struct tree_node* u, struct tree_node* v)
+void bst_transplant(BST t, struct bst_node* u, struct bst_node* v)
 {
     if (u->parent == NULL)
         t = v;
@@ -131,7 +131,7 @@ void bst_transplant(BST t, struct tree_node* u, struct tree_node* v)
 }
 
 /* Delete node y from tree t */
-void bst_delete(BST t, struct tree_node* z)
+void bst_delete(BST t, struct bst_node* z)
 {
     if (z->left == NULL)
         bst_transplant(t, z, z->right);
@@ -139,7 +139,7 @@ void bst_delete(BST t, struct tree_node* z)
         bst_transplant(t, z, z->left);
     else
     {
-        struct tree_node* y = bst_minimum(z->right);
+        struct bst_node* y = bst_minimum(z->right);
         if (y->parent != z)
         {
             bst_transplant(t, y, y->right);

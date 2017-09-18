@@ -42,7 +42,7 @@ int main()
     const int ITEM_7 = 18;
     bst_insert(t, ITEM_7);
 
-    struct tree_node* node = bst_search(t, ITEM_7);
+    struct bst_node* node = bst_search(t, ITEM_7);
     if (!node)
     {
         printf("bst_insert failed\n");
