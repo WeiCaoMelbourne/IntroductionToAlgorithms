@@ -22,6 +22,11 @@ struct rbt_node
 
 typedef struct rbt_node* RBT;
 
-RBT initialize_rbt();
+RBT Initialize_rbt();
+void Rbt_insert(RBT t, int key);
+void Rbt_inorder_print(RBT t);
+void Rbt_inorder_str(RBT t, char* output, size_t len);
+void Rbt_delete(RBT t, struct rbt_node* z);
+struct rbt_node* Rbt_search(RBT t, int x);
 
 #endif
