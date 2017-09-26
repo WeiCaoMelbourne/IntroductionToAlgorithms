@@ -1,7 +1,7 @@
 #include "queue.h"
 #include <stdio.h>
 
-void enqueue(QUEUE* q, int x)
+void Queue_enqueue(Queue q, int x)
 {
     if (q->item_count == MAX_QUEUE_SIZE)
     {
@@ -17,7 +17,12 @@ void enqueue(QUEUE* q, int x)
         q->tail ++;
 }
 
-int dequeue(QUEUE* q)
+int Queue_empty(Queue q)
+{
+    return q->item_count <= 0;
+}
+
+int Queue_dequeue(Queue q)
 {
     if (q->item_count == 0)
     {

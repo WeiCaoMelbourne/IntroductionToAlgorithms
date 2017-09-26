@@ -11,9 +11,10 @@ struct queue
     int item_count;
 };
 
-typedef struct queue QUEUE;
+typedef struct queue* Queue;
 
-void enqueue(QUEUE* q, int x);
-int dequeue(QUEUE* q);
+void Queue_enqueue(Queue q, int x);
+int Queue_dequeue(Queue q);
+int Queue_empty(Queue q);
 
 #endif
