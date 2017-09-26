@@ -1,13 +1,14 @@
 /*
-cc stack.c sorts.c heap.c stack_test.c
+cc queue_test.c queue.c
 */
 
 #include "queue.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
-    Queue s;
+    Queue s = (Queue)malloc(sizeof(struct queue));
     s->head = 0;
     s->tail = 0;
     s->item_count = 0;
@@ -60,6 +61,8 @@ int main()
     }
     else
         printf("test case 3# succeeds\n");
+
+    free(s);
 
     return 0;
 }
