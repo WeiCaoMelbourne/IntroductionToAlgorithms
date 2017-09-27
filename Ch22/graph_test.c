@@ -1,6 +1,6 @@
 
 /*
-cc graph_test.c graph.c
+cc graph_test.c graph.c queue.c
 */
 
 #include "graph.h"
@@ -40,6 +40,12 @@ int main()
     printf("\nCopy graph\n");
     Graph n = Graph_copy(g);
     Graph_print(n);
+
+    printf("\nBreadth first search:\n");
+    Graph_BFS(g);
+
+    printf("\nDepth first search:\n");
+    Graph_DFS(g);
 
     Graph_destroy(g);
     Graph_destroy(n);
