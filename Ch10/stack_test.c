@@ -4,31 +4,32 @@ cc stack.c sorts.c heap.c stack_test.c
 
 #include "stack.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 int main()
 {
-    STACK s;
-    s.top = 0;
+    Stack s = (Stack)malloc(sizeof(struct stack));
+    s->top = 0;
 
-    if (!stack_empty(&s))
+    if (!Stack_empty(s))
     {
         printf("stack_empty fails");
     }
 
-    stack_push(&s, 1);
-    if (stack_empty(&s))
+    Stack_push(s, 1);
+    if (Stack_empty(s))
     {
         printf("stack_empty or stack_push fails. top Expected:%d, actual:%d\n",
-            1, s.top);
+            1, s->top);
     }
     else
     {
         printf("stack_empty succeeds\n");
     }
 
-    stack_push(&s, 2);
+    Stack_push(s, 2);
     // printf
-    int x = stack_pop(&s);
+    int x = Stack_pop(s);
     if (x != 2)
     {
         printf("test case 1# stack_push or stack_pop fails. Expected:%d, actual:%d\n",
@@ -37,7 +38,7 @@ int main()
     else
         printf("test case 1# succeeds\n");
 
-    x = stack_pop(&s);
+    x = Stack_pop(s);
     if (x != 1)
     {
         printf("test case 2# stack_push or stack_pop fails. Expected:%d, actual:%d\n",
@@ -45,6 +46,8 @@ int main()
     }
     else
         printf("test case 2# succeeds\n");
+
+    free(s);
 
     return 0;
 }

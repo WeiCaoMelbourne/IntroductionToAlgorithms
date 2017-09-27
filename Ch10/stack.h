@@ -9,10 +9,10 @@ struct stack
     int top;
 };
 
-typedef struct stack STACK;
+typedef struct stack* Stack;
 
-int stack_empty(STACK* s);
-void stack_push(STACK* s, int x);
-int stack_pop(STACK* s);
+int Stack_empty(Stack s);
+void Stack_push(Stack s, int x);
+int Stack_pop(Stack s);
 
 #endif

@@ -1,7 +1,7 @@
 #include "stack.h"
 #include <stdio.h>
 
-int stack_empty(STACK* s)
+int Stack_empty(Stack s)
 {
     if (s->top == 0)
         return 1;
@@ -9,7 +9,7 @@ int stack_empty(STACK* s)
     return 0;
 }
 
-void stack_push(STACK* s, int x)
+void Stack_push(Stack s, int x)
 {
     if (s->top >= MAX_STACK_SIZE - 1)
     {
@@ -20,9 +20,9 @@ void stack_push(STACK* s, int x)
     s->stk[s->top++] = x;
 }
 
-int stack_pop(STACK* s)
+int Stack_pop(Stack s)
 {
-    if (stack_empty(s))
+    if (Stack_empty(s))
     {
         printf("underflow\n");
         return;
