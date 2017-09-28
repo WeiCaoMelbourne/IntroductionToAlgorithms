@@ -33,7 +33,8 @@ struct adj_node
 
 struct graph
 {
-    int v;
+    int v;      /* vertex number */
+    int e;      /* edge number */
     struct adj_node** adj_lists;
 };
 
@@ -47,5 +48,7 @@ void Graph_destroy(Graph g);
 void Graph_BFS(Graph g);
 int Graph_topological_sort(Graph g);
 void Graph_add_weightededge(Graph g, int src, int dest, int weight);
+int Graph_prim(Graph g);
+int Graph_kruskal(Graph g);
 
 #endif

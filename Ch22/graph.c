@@ -11,6 +11,7 @@ Graph Graph_create(int v)
 {
     Graph g = (struct graph*)malloc(sizeof(struct graph));
     g->v = v;
+    g->e = 0;
     g->adj_lists = (struct adj_node**)malloc(sizeof(struct adj_node*) * v);
 
     int i = 0;
@@ -103,6 +104,8 @@ void Graph_add_weightededge(Graph g, int src, int dest, int weight)
     node2->next = g->adj_lists[dest]->first_edge;
     g->adj_lists[dest]->first_edge = node2;
     g->adj_lists[dest]->in ++;
+
+    g->e ++;
 }
 
 void Graph_destroy(Graph g)
@@ -313,6 +316,154 @@ int Graph_prim(Graph g)
     {
         printf("vertex:%d->%d, weight:%d\n", mst[i].from, mst[i].to, mst[i].weight);
     }
+
+    return total_weight;
+}
+
+/* If 2 nodes connected. Breadth-frst-search.*/
+static int graph_connected(Graph g, int from, int to)
+{
+    int visited[g->v];
+    int i = 0;
+    for (; i < g->v; i++)
+        visited[i] = 0;
+
+    Queue q = (Queue)malloc(sizeof(struct queue));
+    Queue_enqueue(q, from);
+
+    while (!Queue_empty(q))
+    {
+        int vertex = Queue_dequeue(q);
+        struct edge_node* node = g->adj_lists[vertex]->first_edge;
+
+        while (node)
+        {
+            if (!visited[node->vertex])
+            {
+                visited[node->vertex] = 1;
+                if (node->vertex == to)
+                    return 1;
+                Queue_enqueue(q, node->vertex);
+            }
+            node = node->next;
+        }
+    }
+
+    free(q);
+    return 0;
+}
+
+/* Miminum spanning tree. Kruskal algorithm */
+int Graph_kruskal(Graph g)
+{
+    Graph g1 = Graph_create(g->v);
+
+    struct edge_info
+    {
+        int from;
+        int to;
+        int weight;
+        int flag;
+    };
+
+    struct edge_info edges[g->e];
+    int i = 0;
+    for (; i < g->e; i ++)
+        edges[i].from = -1;
+
+    /* put all edges into array edges */
+    i = 0;
+    int edge_count = 0;
+    for (; i < g->v; i++)
+    {
+        if (edge_count >= g->e)
+            break;
+
+        struct edge_node* e = g->adj_lists[i]->first_edge;
+        while (e)
+        {
+            int j = 0;
+            for (; j < g->e; j ++)
+            {
+                if ((edges[j].from == i && edges[j].to == e->vertex)
+                    || (edges[j].to == i && edges[j].from == e->vertex))
+                    break;
+            }
+
+            if (j >= g->e)
+            {
+                edges[edge_count].from = i;
+                edges[edge_count].to = e->vertex;
+                edges[edge_count].weight = e->weight;
+                edges[edge_count].flag = 0;
+                edge_count ++;
+            }
+
+            e = e->next;
+        }
+    }
+
+    int a[g->v];
+    struct edge_info mst[g->v];
+    int mst_count = 0;
+    i = 0;
+    for (; i < g->v; i++)
+        a[i] = -1;
+
+    while (1)
+    {
+        i = 0;
+        for (; i < g->v; i++)
+        {
+            if (a[i] < 0) 
+                break;
+        }
+
+        if (i >= g->v)      /* No more vertice */
+            break;
+
+        int minimal_weight = 65535;
+        int edge_num = -1;
+        i = 0;
+        for (; i < g->e; i++)
+        {
+            if (edges[i].flag == 1) 
+                continue;
+
+            if (edges[i].weight < minimal_weight)
+            {
+                if (!graph_connected(g1, edges[i].from, edges[i].to))
+                {
+                    minimal_weight = edges[i].weight;
+                    edge_num = i;
+                }
+            }
+        }
+
+        printf("Add %d in minimum spanning tree. linked to %d, wieght: %d\n",
+            edges[edge_num].to, edges[edge_num].from, edges[edge_num].weight);
+        edges[edge_num].flag = 1;
+        a[edges[edge_num].from] = 1;
+        a[edges[edge_num].to] = 1;
+        Graph_add_weightededge(
+            g1, edges[edge_num].from, edges[edge_num].to, edges[edge_num].weight);
+
+        mst[mst_count].from = edges[edge_num].from;
+        mst[mst_count].to = edges[edge_num].to;
+        mst[mst_count].weight = edges[edge_num].weight;
+        mst_count ++;
+    }
+
+    /* print minial spanning tree */
+    i = 0;
+    int total_weight = 0;
+    for (; i < g->v - 1; i++)
+    {
+        printf("vertex:%d->%d, weight:%d\n", mst[i].from, mst[i].to, mst[i].weight);
+        total_weight += mst[i].weight;
+    }
+
+    Graph_destroy(g1);
 
     return total_weight;
 }

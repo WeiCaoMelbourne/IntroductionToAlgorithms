@@ -102,6 +102,17 @@ int main()
         printf("Graph_prim succeeds.\n");
     }
 
+    printf("\nGraph_kruskal:\n");
+    minimum_weight = Graph_kruskal(connected_g);
+    if (minimum_weight != MST_RESULT)
+    {
+        printf("Graph_kruskal failed. Expected:%d, actual:%d\n", MST_RESULT, minimum_weight);
+    }
+    else
+    {
+        printf("Graph_kruskal succeeds.\n");
+    }
+
     Graph_destroy(connected_g);
     return 0;
 }
