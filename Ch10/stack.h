@@ -1,7 +1,7 @@
 #ifndef CW_STACK_H
 #define CW_STACK_H
 
-#define MAX_STACK_SIZE 10
+#define MAX_STACK_SIZE 20
 
 struct stack
 {

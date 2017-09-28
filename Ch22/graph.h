@@ -26,6 +26,7 @@ struct edge_node
 
 struct adj_node
 {
+    int in;         /* in of this vertice; for topological sort*/
     int vertex;
     struct edge_node* first_edge;
 };
@@ -44,5 +45,7 @@ void Graph_print(Graph g);
 Graph Graph_copy(Graph s);
 void Graph_destroy(Graph g);
 void Graph_BFS(Graph g);
+int Graph_topological_sort(Graph g);
+void Graph_add_weightededge(Graph g, int src, int dest, int weight);
 
 #endif
