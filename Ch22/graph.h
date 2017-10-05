@@ -50,5 +50,6 @@ int Graph_topological_sort(Graph g);
 void Graph_add_weightededge(Graph g, int src, int dest, int weight);
 int Graph_prim(Graph g);
 int Graph_kruskal(Graph g);
+void Graph_dijkstra(Graph g, int vertex);
 
 #endif

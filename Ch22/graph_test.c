@@ -113,6 +113,12 @@ int main()
         printf("Graph_kruskal succeeds.\n");
     }
 
+    printf("\nGraph_dijkstra:\n");
+    Graph_dijkstra(connected_g, 0);
+
+    printf("\nGraph_bellman_ford:\n");
+    Graph_bellman_ford(connected_g, 0);
+
     Graph_destroy(connected_g);
     return 0;
 }

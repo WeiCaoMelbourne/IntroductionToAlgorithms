@@ -320,7 +320,7 @@ int Graph_prim(Graph g)
     return total_weight;
 }
 
-/* If 2 nodes connected. Breadth-frst-search.*/
+/* If 2 nodes connected. Breadth-first-search.*/
 static int graph_connected(Graph g, int from, int to)
 {
     int visited[g->v];
@@ -466,4 +466,160 @@ int Graph_kruskal(Graph g)
     Graph_destroy(g1);
 
     return total_weight;
+}
+
+/* Shortest path. Dijkstra*/
+void Graph_dijkstra(Graph g, int vertex)
+{
+    /* s: vertices that are handled. 
+    distance: distance from this vertice to point vertex
+    */
+    int s[g->v], distance[g->v];
+    int i = 0;
+    for (; i < g->v; i++)
+    {
+        s[i] = -1;
+        distance[i] = 65535;
+    }
+
+    s[vertex] = 0;
+    distance[vertex] = 0;
+    int v = vertex;
+    while (1)
+    {
+        i = 0;
+        for (; i < g->v; i++)
+            if (s[i] < 0)
+                break;
+
+        if (i >= g->v)  /* all vertices are in set s */
+            break;
+
+        struct edge_node* e = g->adj_lists[v]->first_edge;
+        int minimal_vetice = -1;
+        while (e)
+        {
+            if (s[e->vertex] >= 0)  /* node already in s */
+            {
+                e = e->next;
+                continue;
+            }
+
+            if (e->weight + distance[v] < distance[e->vertex])
+                distance[e->vertex] = e->weight + distance[v];
+
+            e = e->next;
+        }
+
+        /* put the mininal vertex in dist into s */
+        i = 0;
+        int minimal_weight = 65535;
+        for (; i < g->v; i++)
+        {
+            if (s[i] >= 1)
+                continue;
+
+            if (distance[i] < minimal_weight)
+            {
+                minimal_weight = distance[i];
+                minimal_vetice = i;
+            }
+        }
+            
+        v = minimal_vetice;
+        s[v] = 1;
+    }
+
+    /* print all distance */
+    i = 0;
+    for (; i < g->v; i++)
+    {
+        printf("vertex:%d, distance from %d: %d\n", i, vertex, distance[i]);
+    }
+}
+
+/*
+Bellmen Ford. Shortest path.
+1. every vertice: distance[g->v] = 65535;
+2. Relax on every edge (g->v times).
+*/
+int Graph_bellman_ford(Graph g, int vertex)
+{
+    struct edge_info
+    {
+        int from;
+        int to;
+        int weight;
+    };
+
+    struct edge_info edges[g->e];
+    int i = 0;
+    for (; i < g->e; i ++)
+        edges[i].from = -1;
+
+    /* put all edges into array edges */
+    i = 0;
+    int edge_count = 0;
+    for (; i < g->v; i++)
+    {
+        if (edge_count >= g->e)
+            break;
+
+        struct edge_node* e = g->adj_lists[i]->first_edge;
+        while (e)
+        {
+            int j = 0;
+            for (; j < g->e; j ++)
+            {
+                if ((edges[j].from == i && edges[j].to == e->vertex)
+                    || (edges[j].to == i && edges[j].from == e->vertex))
+                    break;
+            }
+
+            if (j >= g->e)
+            {
+                edges[edge_count].from = i;
+                edges[edge_count].to = e->vertex;
+                edges[edge_count].weight = e->weight;
+                // edges[edge_count].flag = 0;
+                edge_count ++;
+            }
+
+            e = e->next;
+        }
+    }
+
+    /*step 1#: all vertice distances are 65535 */
+    int distance[g->v];
+    i = 0;
+    for (; i < g->v; i++)
+        distance[i] = 65535;
+    distance[vertex] = 0;
+
+    /* step 2#: relax for every edge */
+    i  = 0;
+    for (; i < g->v - 1; i++)
+    {
+        int j = 0;
+        for (; j < g->e; j++)
+        {
+            if (distance[edges[j].from] + edges[j].weight < distance[edges[j].to])
+                distance[edges[j].to] = distance[edges[j].from] + edges[j].weight;
+        }
+    }
+
+    /* print all distance */
+    i = 0;
+    for (; i < g->v; i++)
+    {
+        printf("vertex:%d, distance from %d: %d\n", i, vertex, distance[i]);
+    }
+
+    /* check if there is negative-weight cycle */
+    i = 0;
+    for (; i < g->e; i++)
+        if (distance[edges[i].from] + edges[i].weight < distance[edges[i].to])
+            return -1;
+
+    return 0;
 }
